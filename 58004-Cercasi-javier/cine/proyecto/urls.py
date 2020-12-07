@@ -8,6 +8,6 @@ urlpatterns = [
     url(r'^api/salas$', views.salas_list),
     url(r'^api/salas/(?P<pk>[0-9]+)$', views.salas_detail),
     url(r'^api/proyecciones$', views.proyecciones_list),
-    #url(r'^api/proyecciones/(?P<pk>[0-9]+)$', views.proyeccion_detail)
+    #  url(r'^api/proyecciones/(?P<pk>[0-9]+)$', views.proyeccion_detail)
 
 ]
