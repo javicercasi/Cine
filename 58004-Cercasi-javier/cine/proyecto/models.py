@@ -25,14 +25,12 @@ class Proyeccion(models.Model):
     pelicula = models.ForeignKey(Pelicula, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
-    time = models.DateTimeField()   # Hora de proyeccion
+    time = models.TimeField()   # Hora de proyeccion
     status = models.CharField(max_length=10)
 
 
 class Reserva(models.Model):
     proyeccion = models.ForeignKey(Proyeccion, on_delete=models.CASCADE)
-    time_r = models.DateTimeField()
+    time_r = models.DateField()
     row = models.IntegerField()
     seat = models.IntegerField()
-
-
