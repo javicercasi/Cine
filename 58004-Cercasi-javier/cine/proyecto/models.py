@@ -12,12 +12,22 @@ class Pelicula(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
+    class Meta:
+        verbose_name = "Pelicula"
+        verbose_name_plural = "Peliculas"
+
+    def __str__(self):
+        return self.name
+
 
 class Sala(models.Model):
     name = models.CharField(max_length=70, blank=False)
     status = models.CharField(max_length=15)
     row = models.IntegerField()
     seat = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 
 class Proyeccion(models.Model):
