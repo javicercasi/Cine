@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'proyecto.apps.ProyectoConfig',
+    'proyecto.apps.ProyectoConfig',  # App creada
     'corsheaders',
 ]
 
@@ -129,6 +129,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
+CORS_ORIGIN_WHITELIST = (   # Dar permisos de que alguien use nuestra api desde afuera, seguridad
     'http://localhost:8081',
 )

@@ -5,8 +5,8 @@ from proyecto.models import Pelicula, Proyeccion, Sala, Reserva
 class PeliculaSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Pelicula
-        fields = ('id',
+        model = Pelicula        # Modelos
+        fields = ('id',         # Campos
                   'name',
                   'duration',
                   'description',

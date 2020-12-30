@@ -16,3 +16,4 @@ urlpatterns = [
     url(r'^api/reportes/ranking$', views.reportes_ranking),
     url(r'^api/reportes/peliculas$', views.reporte_peliculas)
 ]
+#  Urls para publicar nuestro servicio

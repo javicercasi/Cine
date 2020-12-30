@@ -14,7 +14,7 @@ import operator
 @api_view(['GET', 'POST', 'DELETE']) # decorador
 def peliculas_list(request):
     if request.method == 'GET':
-        peliculas = Pelicula.objects.all()
+        peliculas = Pelicula.objects.all()      # Consultar todos los registros de la tabla
         rango = request.GET.get('rango', None)
         name = request.GET.get('name', None)
         if name is not None:
@@ -26,10 +26,11 @@ def peliculas_list(request):
                                          timedelta(days=int(rango))))
         peliculas_serializer = PeliculaSerializer(peliculas, many=True)
         return JsonResponse(peliculas_serializer.data, safe=False)
+        # Safe= False para serializacion de objetos
 
     elif request.method == 'POST':  # EL id no lo tengo que mandar
         pelicula_data = JSONParser().parse(request)  # Armar un parseo para recontruir el par clave valor
-        pelicula_serializer = PeliculaSerializer(data=pelicula_data) #deserializar el dato
+        pelicula_serializer = PeliculaSerializer(data=pelicula_data) #deserializar el dato json
         if pelicula_serializer.is_valid(): # si es valido, lo grabo en mi DB
             pelicula_serializer.save()
             return JsonResponse(pelicula_serializer.data, status=status.HTTP_201_CREATED)
