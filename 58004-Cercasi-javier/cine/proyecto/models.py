@@ -15,6 +15,7 @@ class Pelicula(models.Model):
     class Meta:
         verbose_name = "Pelicula"
         verbose_name_plural = "Peliculas"
+        ordering = ["pk"]
 
     def __str__(self):
         return self.name
@@ -25,6 +26,11 @@ class Sala(models.Model):
     status = models.CharField(max_length=15)
     row = models.IntegerField()
     seat = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Sala"
+        verbose_name_plural = "Salas"
+        ordering = ["pk"]
 
     def __str__(self):
         return self.name
@@ -38,9 +44,23 @@ class Proyeccion(models.Model):
     time = models.TimeField()   # Hora de proyeccion
     status = models.CharField(max_length=10)
 
+    class Meta:
+        verbose_name = "Proyeccion"
+        verbose_name_plural = "Proyecciones"
+        ordering = ["pk"]
+
+    def __str__(self):
+        a = str(self.pk) + "->" + str(self.pelicula.name)
+        return a
+
 
 class Reserva(models.Model):
     proyeccion = models.ForeignKey(Proyeccion, on_delete=models.CASCADE)
     time_r = models.DateField()
     row = models.IntegerField()
     seat = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Butaca"
+        verbose_name_plural = "Reservas"
+        ordering = ["pk"]
