@@ -311,7 +311,7 @@ def posteo(butaca, butacas_serializer):
                         num_vendidas = len(Reserva.objects.filter(proyeccion=butaca["proyeccion"]))
 
                         if butacas.row == butaca["row"] and butacas.seat != butaca["seat"]:
-                            contador += 1           # Para que recorra si o si todos los for
+                            contador += 1           # Para que recorra si o si todos las butacas
                         if butacas.row != butaca["row"] and butacas.seat == butaca["seat"]:
                             contador += 1
                         if butacas.row != butaca["row"] and butacas.seat != butaca["seat"]:
@@ -352,10 +352,13 @@ def reportes_list(request, pk=0):
     except TypeError:
         return JsonResponse({'Message': 'The query is wrong'}, status=status.HTTP_404_NOT_FOUND)
 
+    # Entradas vendidas en un rango de tiempo:
     if inicio is not None and fin is not None and pk == 0:
         for butaca in butacas:
             if str(butaca.time_r) in lista_fechas_u:
                 butacas_list.append(butaca)
+
+    # Entradas vendidas en un rango de tiempo de una proyeccion particular:
     if pk != 0:
         try:
             butacas = Reserva.objects.filter(proyeccion=pk)
@@ -371,6 +374,8 @@ def reportes_list(request, pk=0):
 
     butacas_serializer = ReservaSerializer(butacas_list, many=True)
     return JsonResponse(["Entradas vendidas: "+str(len(butacas_list))]+butacas_serializer.data, safe=False, status=status.HTTP_200_OK)
+
+# Ranking mas vendidas dado rango de tiempo:
 
 @api_view(['GET'])
 def reportes_ranking(request):
@@ -405,13 +410,15 @@ def reportes_ranking(request):
 
         butacas_ord = dict(sorted(butacas_dic.items(), key=operator.itemgetter(1), reverse=True))
         butacas_fecha = {}
-        for elemento in butacas_ord.items():
+        for elemento in butacas_ord.items():    # Ordenado por numeros:
             contador += 1
             if contador <= 5:
                 butacas_fecha[elemento[0]] = elemento[1]
 
         d3 = {**{"Ranking de proyecciones": "5"}, **butacas_fecha}
     return JsonResponse(d3, safe=False, status=status.HTTP_200_OK)
+
+# Entradas vendidas de peliculas activas:
 
 @api_view(['GET'])
 def reporte_peliculas(request):
