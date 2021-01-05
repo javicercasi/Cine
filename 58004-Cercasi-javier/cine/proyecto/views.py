@@ -197,7 +197,7 @@ def proyecciones_list(request):
                        (sala.status == "Habilitada")):
                         proyecciones_list.append(proyeccion)
 
-        # GET todas:
+        # GET todas proyectables:
         else:
             proyecciones_list = []
             for proyeccion in proyecciones:
@@ -224,6 +224,7 @@ def proyecciones_list(request):
         return JsonResponse(proyeccion_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Get proyeccion.pk y put:
 @api_view(['GET', 'PUT', 'DELETE'])
 def proyecciones_detail(request, pk):
     try:
@@ -254,6 +255,7 @@ def proyecciones_detail(request, pk):
 # Butacas
 @api_view(['GET', 'POST', 'DELETE'])
 def butacas_list(request):
+    # Get butacas:
     if request.method == 'GET':
         butacas = Reserva.objects.all()
         butacas_serializer = ReservaSerializer(butacas, many=True)
@@ -276,7 +278,7 @@ def butacas_detail(request, pk):
     except Reserva.DoesNotExist:
         return JsonResponse({'Mensaje': 'La Butaca especificada no existe'}, status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
+    if request.method == 'GET':     # Get + butaca:
         butaca_serializer = ReservaSerializer(butaca_data)
         return JsonResponse(butaca_serializer.data, safe=False, status=status.HTTP_200_OK)
 
@@ -294,7 +296,7 @@ def butacas_detail(request, pk):
 def posteo(butaca, butacas_serializer):
     contador = num_vendidas = 0
 
-    if butacas_serializer.is_valid():
+    if butacas_serializer.is_valid():      # Ingresada por el usuario (clave)
         proyeccion = Proyeccion.objects.get(pk=butaca["proyeccion"])
         sala = Proyeccion.objects.get(pk=butaca['proyeccion']).sala
 
